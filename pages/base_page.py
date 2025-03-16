@@ -1,3 +1,7 @@
+from requests import options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import element_located_selection_state_to_be
@@ -17,11 +21,17 @@ class BasePage:
 
     def initialize_driver(self, browser):
         if browser.lower() == "chrome":
-            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+            options = ChromeOptions()
+            options.add_argument("--lang=en-GB")
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
         elif browser.lower() == "firefox":
-            driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+            options = FirefoxOptions()
+            options.set_preference("intl.accept_languages", "en-GB")
+            driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options)
         elif browser.lower() == "edge":
-            driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
+            options = EdgeOptions()
+            options.add_argument("--lang=en-GB")
+            driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=options)
         else:
             raise ValueError("Unsupported browser! Choose from 'chrome', 'firefox' and 'edge'.")
 

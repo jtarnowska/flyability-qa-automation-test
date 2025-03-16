@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 
 class MapPage(BasePage):
 
-    ACCEPT_COOKIES_BUTTON = (By.CLASS_NAME, "UywwFc-RLmnJb")
+    ACCEPT_COOKIES_BUTTON = (By.XPATH, "//button[contains(., 'Accept all')]")
     TOWN_SEARCH_FROM = (By.ID, "searchboxinput")
 
     def __init__(self, driver):

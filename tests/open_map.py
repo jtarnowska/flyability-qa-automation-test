@@ -1,8 +1,7 @@
 import pytest
 from pages.map_page import MapPage
 
-
-@pytest.mark.parametrize("browser", ["chrome"])
+@pytest.mark.parametrize("browser", ["chrome", "firefox", "edge"])
 def test_enter_town_name(browser):
     map_page = MapPage(browser)
     map_page.open_url("https://www.google.com/maps")
