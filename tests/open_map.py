@@ -10,4 +10,8 @@ def test_enter_town_name(browser):
     map_page.enter_starting_point("Lausanne")
     map_page.enter_destination_point("Genève")
     map_page.press_enter()
+    map_page.click_on_driving_button()
+    map_page.assert_distance_display()
+    map_page.assert_scrolling()
+    map_page.assert_text_over_walking_icon("Walking")
     map_page.driver.quit()

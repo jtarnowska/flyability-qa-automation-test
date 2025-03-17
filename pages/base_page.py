@@ -10,6 +10,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage:
@@ -50,6 +51,14 @@ class BasePage:
     def click_on(self, locator):
         element = self.wait.until(EC.presence_of_element_located(locator))
         element.click()
+
+    def hover_and_check_text(self, hover_locator, text_locator, expected_text):
+        element_to_hover = self.find_element(hover_locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element_to_hover).perform()
+        text_element = self.wait.until(EC.presence_of_element_located(text_locator))
+        actual_text = text_element.text
+        assert expected_text in actual_text, f"Expected '{expected_text}', but got '{actual_text}'"
 
 
 
