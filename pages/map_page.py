@@ -15,7 +15,9 @@ class MapPage(BasePage):
     DISTANCE_DISPLAY = (By.XPATH, '//*[@id="section-directions-trip-0"]/div[1]/div/div[1]/div[2]/div')
     RESTAURANTS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Restaurants"]')
     WALKING_BUTTON = (By.CSS_SELECTOR, '[aria-label="Walking"]')
-    WALKING_TOOLTIP = (By.XPATH, '//div[text()="Walking"]')
+    DRIVING_TOOLTIP = (By.XPATH, '//div[text()="Driving"]')
+    LAYERS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Interactive map"]')
+    MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quick")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -26,11 +28,11 @@ class MapPage(BasePage):
     def click_on_directions_button(self):
         self.click_on(self.DIRECTIONS_BUTTON)
 
-    def enter_starting_point(self, townname):
-        self.input_text(self.STARTING_POINT_INPUT, townname)
+    def enter_starting_point(self, town_name):
+        self.input_text(self.STARTING_POINT_INPUT, town_name)
 
-    def enter_destination_point(self, townname):
-        self.input_text(self.DESTINATION_POINT_INPUT, townname)
+    def enter_destination_point(self, town_name):
+        self.input_text(self.DESTINATION_POINT_INPUT, town_name)
 
     def press_enter(self):
         actions = ActionChains(self.driver)
@@ -52,8 +54,17 @@ class MapPage(BasePage):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
         assert EC.visibility_of_element_located(self.RESTAURANTS_BUTTON)(self.driver), "Scrolling failed!"
 
-    def assert_text_over_walking_icon(self, expected_text):
-        self.hover_and_check_text(self.WALKING_BUTTON, self.WALKING_TOOLTIP, expected_text)
+    def assert_text_over_driving_icon(self, expected_text):
+        self.hover_and_check_text(self.DRIVING_BUTTON, self.DRIVING_TOOLTIP, expected_text)
+
+    def save_screenshot(self):
+        self.driver.save_screenshot('./screenshots/screenshot.png')
+
+    def assert_tooltip_over_layers_button(self):
+        self.hover_and_check_element_visibility(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)
+
+
+
 
 
 

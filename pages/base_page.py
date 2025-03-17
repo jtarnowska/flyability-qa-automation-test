@@ -60,5 +60,12 @@ class BasePage:
         actual_text = text_element.text
         assert expected_text in actual_text, f"Expected '{expected_text}', but got '{actual_text}'"
 
+    def hover_and_check_element_visibility(self, hover_locator, target_locator):
+        element_to_hover = self.find_element(hover_locator)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element_to_hover).perform()
+        target_element = self.find_element(target_locator)
+        assert target_element.is_displayed(), "Element is not visible after hovering."
+
 
 
