@@ -15,7 +15,7 @@
 5. Run tests.
 
 # How to run tests
-By default, all tests are run on Chrome browser, but they are also working on Firefox and Edge (by using an option `--browser_name`)
+By default, all tests are run on Chrome browser, but they are also working on Firefox and Edge (by using an option `--browser`)
 
 ## All tests at once
 `pytest tests`
@@ -24,11 +24,11 @@ By default, all tests are run on Chrome browser, but they are also working on Fi
 `pytest tests --html=./reports/report.html --self-contained-html`
 
 ## Run tests on specific browser
-`pytest tests --browser_name chrome`
+`pytest tests --browser chrome`
 
-`pytest tests --browser_name firefox`
+`pytest tests --browser firefox`
 
-`pytest tests --browser_name edge`
+`pytest tests --browser edge`
 
 # Additional information:
 - screenshots are available in `screenshots` folder after running tests

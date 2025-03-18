@@ -12,12 +12,12 @@ from utils.config import BROWSER_LANGUAGE
 def pytest_addoption(parser):
     """Custom Pytest command line options"""
     parser.addoption(
-        "--browser_name", action="store", default="chrome"
+        "--browser", action="store", default="chrome"
     )
 
 @pytest.fixture(scope="class")
 def driver(request):
-    browser_name = request.config.getoption("browser_name")
+    browser_name = request.config.getoption("browser")
 
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()

@@ -18,7 +18,7 @@ class MapPage(BasePage):
     DISTANCE_DISPLAY = (By.XPATH, '//*[@id="section-directions-trip-0"]/div[1]/div/div[1]/div[2]/div')
     RESTAURANTS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Restaurants"]')
     LAYERS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Interactive map"]')
-    MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quick")
+    MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quickm")
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -42,10 +42,10 @@ class MapPage(BasePage):
         actions = ActionChains(self.driver)
         actions.send_keys(Keys.RETURN).perform()
 
-    def click_on_driving_button(self):
+    def open_driving_panel(self):
         self.click_on(self.DRIVING_BUTTON)
 
-    def get_distance_display_text(self):
+    def get_distance_text(self):
         element = self.find_element(self.DISTANCE_DISPLAY)
         return element.text.strip()
 
@@ -57,11 +57,8 @@ class MapPage(BasePage):
     def get_text_over_driving_icon(self):
         return self.hover_and_get_text(self.DRIVING_BUTTON, self.DRIVING_TOOLTIP)
 
-    def save_screenshot_for_specific_test(self, test_name):
-        self.save_screenshot(test_name)
-
     def get_tooltip_over_layers_button(self):
-        return self.hover_to_see_tooltip(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)
+        return self.hover_to_get_tooltip(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)
 
 
 

@@ -10,7 +10,7 @@ def map_page(driver):
     return map_page
 
 class TestMapPage:
-    def test_distance_display(self, map_page):
+    def test_distance_display(self, request, map_page):
         map_page.open_map()
         map_page.click_on_directions_button()
         map_page.enter_starting_point("Lausanne")
@@ -20,20 +20,21 @@ class TestMapPage:
         driving_text = map_page.get_text_over_driving_icon()
         assert "Driving" in driving_text, f"Expected 'Driving' but got '{driving_text}'"
 
-        map_page.click_on_driving_button()
+        map_page.open_driving_panel()
 
-        distance_display = map_page.get_distance_display_text()
+        distance_display = map_page.get_distance_text()
         pattern = r"^\d+(\.\d+)?\s*km$"
         assert re.match(pattern, distance_display), f"Distance format is incorrect: {distance_display}"
 
-        is_scrolling_successful = map_page.scroll_to_restaurants_icon()
-        assert is_scrolling_successful, "Scrolling to the restaurants button failed"
+        restaurant_icon = map_page.scroll_to_restaurants_icon()
+        assert restaurant_icon, "Scrolling to the restaurants button failed"
 
-        map_page.save_screenshot_for_specific_test("test_distance_display")
+        map_page.save_screenshot(request.node.originalname)
 
-    def test_hover_layers(self, map_page):
+    def test_hover_layers(self, request, map_page):
         map_page.open_map()
-        is_tooltip_visible = map_page.get_tooltip_over_layers_button()
-        assert is_tooltip_visible, "Tooltip over layers button is not visible after hovering"
 
-        map_page.save_screenshot_for_specific_test("test_hover_layers")
+        tooltip_exists, tooltip  = map_page.get_tooltip_over_layers_button()
+        assert tooltip_exists, "Tooltip over layers button is not visible after hovering"
+
+        map_page.save_screenshot(request.node.originalname)
