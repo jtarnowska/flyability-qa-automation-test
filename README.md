@@ -12,6 +12,7 @@
 `pip install -r requirements.txt
 
 # How to run tests
+By default all tests are run on Chrome browser but they are also working on Firefox and Edge (by using proper parameter)
 ## All tests at once
 `pytest .\tests\map_test.py` 
 ## Specific test
@@ -19,9 +20,12 @@
 Example: `pytest .\tests\map_test.py::test_distance_display`
 ## Test with generating HTML report
 `pytest .\tests\map_test.py --html=./reports/report.html --self-contained-html`
+## Run tests on specific browser
+`pytest .\tests\map_test.py::test_hover_layers --browser_name chrome`
+`pytest .\tests\map_test.py::test_hover_layers --browser_name firefox`
+`pytest .\tests\map_test.py::test_hover_layers --browser_name edge`
 
 # Additional information:
 - screenshots are available in .screenshots folder after running tests
 - reports are available from the link visible in the terminal after running tests and are saved in .reports directory
 - browsers are opened in en_GB language to make sure all selectors are always correct
-- 
