@@ -4,6 +4,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import re
 from selenium.webdriver.support import expected_conditions as EC
+from utils.config import GOOGLE_MAPS_URL
+
 
 class MapPage(BasePage):
 
@@ -20,6 +22,9 @@ class MapPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
+
+    def open_map(self):
+        self.open_url(GOOGLE_MAPS_URL)
 
     def accept_cookies(self):
         self.click_on(self.ACCEPT_COOKIES_BUTTON)
