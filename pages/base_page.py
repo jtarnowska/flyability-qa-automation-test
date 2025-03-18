@@ -25,22 +25,19 @@ class BasePage:
         element = self.wait.until(EC.presence_of_element_located(locator))
         element.click()
 
-    def hover_and_check_text(self, hover_locator, text_locator, expected_text):
+    def hover_and_get_text(self, hover_locator, text_locator):
         element_to_hover = self.find_element(hover_locator)
         actions = ActionChains(self.driver)
         actions.move_to_element(element_to_hover).perform()
         time.sleep(0.5)  # Needed for Firefox to process visibility of tooltip
-        text_element = self.wait.until(EC.presence_of_element_located(text_locator))
-        actual_text = text_element.text
-        assert expected_text in actual_text, f"Expected '{expected_text}', but got '{actual_text}'"
+        return self.wait.until(EC.presence_of_element_located(text_locator)).text.strip()
 
-    def hover_and_check_element_visibility(self, hover_locator, target_locator):
+    def hover_to_see_tooltip(self, hover_locator, target_locator):
         element_to_hover = self.find_element(hover_locator)
         actions = ActionChains(self.driver)
         actions.move_to_element(element_to_hover).perform()
         time.sleep(0.5) # Needed for Firefox to process visibility of tooltip
-        target_element = self.find_element(target_locator)
-        assert target_element.is_displayed(), f"Element {target_locator} is not visible after hovering."
+        return self.find_element(target_locator)
 
     def save_screenshot(self, test_name):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

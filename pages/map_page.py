@@ -45,27 +45,23 @@ class MapPage(BasePage):
     def click_on_driving_button(self):
         self.click_on(self.DRIVING_BUTTON)
 
-    def assert_distance_display(self):
+    def get_distance_display_text(self):
         element = self.find_element(self.DISTANCE_DISPLAY)
-        distance_display = element.text.strip()
+        return element.text.strip()
 
-        pattern = r"^\d+(\.\d+)?\s*km$"
-
-        assert re.match(pattern, distance_display), f"Distance format is incorrect: {distance_display}"
-
-    def assert_scrolling(self):
+    def scroll_to_restaurants_icon(self):
         element = self.find_element(self.RESTAURANTS_BUTTON)
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
-        assert EC.visibility_of_element_located(self.RESTAURANTS_BUTTON)(self.driver), "Scrolling failed!"
+        return EC.visibility_of_element_located(self.RESTAURANTS_BUTTON)(self.driver)
 
-    def assert_text_over_driving_icon(self, expected_text):
-        self.hover_and_check_text(self.DRIVING_BUTTON, self.DRIVING_TOOLTIP, expected_text)
+    def get_text_over_driving_icon(self):
+        return self.hover_and_get_text(self.DRIVING_BUTTON, self.DRIVING_TOOLTIP)
 
     def save_screenshot_for_specific_test(self, test_name):
         self.save_screenshot(test_name)
 
-    def assert_tooltip_over_layers_button(self):
-        self.hover_and_check_element_visibility(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)
+    def get_tooltip_over_layers_button(self):
+        return self.hover_to_see_tooltip(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)
 
 
 
