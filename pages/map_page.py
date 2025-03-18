@@ -12,10 +12,9 @@ class MapPage(BasePage):
     STARTING_POINT_INPUT = (By.CSS_SELECTOR, '[aria-label="Choose starting point, or click on the map..."]')
     DESTINATION_POINT_INPUT = (By.CSS_SELECTOR, '[aria-label="Choose destination, or click on the map..."]')
     DRIVING_BUTTON = (By.CSS_SELECTOR, '[aria-label="Driving"]')
+    DRIVING_TOOLTIP = (By.XPATH, '//div[text()="Driving"]')
     DISTANCE_DISPLAY = (By.XPATH, '//*[@id="section-directions-trip-0"]/div[1]/div/div[1]/div[2]/div')
     RESTAURANTS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Restaurants"]')
-    WALKING_BUTTON = (By.CSS_SELECTOR, '[aria-label="Walking"]')
-    DRIVING_TOOLTIP = (By.XPATH, '//div[text()="Driving"]')
     LAYERS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Interactive map"]')
     MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quick")
 
@@ -57,8 +56,8 @@ class MapPage(BasePage):
     def assert_text_over_driving_icon(self, expected_text):
         self.hover_and_check_text(self.DRIVING_BUTTON, self.DRIVING_TOOLTIP, expected_text)
 
-    def save_screenshot(self):
-        self.driver.save_screenshot('./screenshots/screenshot.png')
+    def save_screenshot_for_specific_test(self, test_name):
+        self.save_screenshot(test_name)
 
     def assert_tooltip_over_layers_button(self):
         self.hover_and_check_element_visibility(self.LAYERS_BUTTON, self.MAP_ITEMS_TOOLTIP)

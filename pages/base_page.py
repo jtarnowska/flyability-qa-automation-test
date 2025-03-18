@@ -11,6 +11,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.common.action_chains import ActionChains
+import datetime
 
 
 class BasePage:
@@ -66,6 +67,11 @@ class BasePage:
         actions.move_to_element(element_to_hover).perform()
         target_element = self.find_element(target_locator)
         assert target_element.is_displayed(), "Element is not visible after hovering."
+
+    def save_screenshot(self, test_name):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        screenshot_path = f"./screenshots/{test_name}_{timestamp}.png"
+        self.driver.save_screenshot(screenshot_path)
 
 
 

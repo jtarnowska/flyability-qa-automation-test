@@ -14,7 +14,7 @@ def test_distance_display(browser):
     map_page.click_on_driving_button()
     map_page.assert_distance_display()
     map_page.assert_scrolling()
-    map_page.save_screenshot()
+    map_page.save_screenshot_for_specific_test("test_distance_display")
     map_page.driver.quit()
 
 @pytest.mark.parametrize("browser", ["chrome"])
@@ -23,5 +23,5 @@ def test_hover_layers(browser):
     map_page.open_url("https://www.google.com/maps")
     map_page.accept_cookies()
     map_page.assert_tooltip_over_layers_button()
-    map_page.save_screenshot()
+    map_page.save_screenshot_for_specific_test("test_hover_layers")
     map_page.driver.quit()
