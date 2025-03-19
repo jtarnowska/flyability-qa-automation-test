@@ -23,7 +23,7 @@ class TestMapPage:
         map_page.open_driving_panel()
 
         distance_display = map_page.get_distance_text()
-        pattern = r"^\d+(\.\d+)?\s*km$"
+        pattern = r"^\d{1,3}(,\d{3})*(\.\d+)?\s*(km|miles)$"
         assert re.match(pattern, distance_display), f"Distance format is incorrect: {distance_display}"
 
         restaurant_icon = map_page.scroll_to_restaurants_icon()

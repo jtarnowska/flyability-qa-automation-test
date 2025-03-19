@@ -2,7 +2,6 @@ from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-import re
 from selenium.webdriver.support import expected_conditions as EC
 from utils.config import GOOGLE_MAPS_URL
 
@@ -18,7 +17,7 @@ class MapPage(BasePage):
     DISTANCE_DISPLAY = (By.XPATH, '//*[@id="section-directions-trip-0"]/div[1]/div/div[1]/div[2]/div')
     RESTAURANTS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Restaurants"]')
     LAYERS_BUTTON = (By.CSS_SELECTOR, '[aria-label="Interactive map"]')
-    MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quickm")
+    MAP_ITEMS_TOOLTIP = (By.ID, "layer-switcher-quick")
 
     def __init__(self, driver):
         super().__init__(driver)
