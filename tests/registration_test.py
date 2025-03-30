@@ -1,6 +1,8 @@
+import pytest
 from pages.registration_page import RegistrationPage
 
 class TestRegistrationPage:
+    @pytest.mark.smoke
     def test_wrong_email(self, driver):
         registration_page = RegistrationPage(driver)
         registration_page.open_google()

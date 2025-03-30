@@ -14,9 +14,10 @@ class TestMapPage:
 
     @pytest.mark.parametrize("starting_point, destination_point", [
         ("Lausanne", "Genève"),
-        ("Bern", "Lugano"),
+        ("Bern", "Luzern"),
         ("Lutry", "Sion")
     ])
+    @pytest.mark.smoke
     def test_distance_display(self, request, map_page, starting_point, destination_point, driver):
         map_page.open_map()
         map_page.click_on_directions_button()
@@ -38,6 +39,7 @@ class TestMapPage:
 
         map_page.save_screenshot(request.node.originalname)
 
+    @pytest.mark.regression
     def test_hover_layers(self, request, map_page):
         map_page.open_map()
 

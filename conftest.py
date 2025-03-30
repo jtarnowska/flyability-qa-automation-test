@@ -21,17 +21,15 @@ def pytest_runtest_makereport(item, call):
         driver = item.funcargs.get("driver")  # Get driver from fixture
         if driver:
             # Save the screenshot
-            screenshots_dir = "../screenshots_failed_tests"
+            screenshots_dir = "../screenshots"
             os.makedirs(screenshots_dir, exist_ok=True)
 
             screenshot_name = f"{item.nodeid.replace('::', '_').replace('.', '_')}.png"
-            screenshot_name_normalized = get_last_path_segment(screenshot_name)
+            screenshot_name_normalized = "failed_" + get_last_path_segment(screenshot_name)
             screenshot_path = os.path.join(screenshots_dir, screenshot_name_normalized)
 
             driver.save_screenshot(screenshot_path)
             print(f"\n[INFO] Screenshot saved: {screenshot_path}")
-            print(f"\n[INFO] Name saved: {screenshot_name}")
-            print(f"\n[INFO] Item saved: {item.nodeid}")
 
 def get_last_path_segment(path):
     """Returns the last segment of a given path"""
