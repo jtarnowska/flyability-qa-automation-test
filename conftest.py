@@ -1,3 +1,4 @@
+import os
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -8,6 +9,33 @@ from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from utils.config import BROWSER_LANGUAGE
 
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """Capture screenshot on test failure using hook"""
+    outcome = yield
+    report = outcome.get_result()
+
+    # Check if the test failed
+    if report.when == "call" and report.failed:
+        driver = item.funcargs.get("driver")  # Get driver from fixture
+        if driver:
+            # Save the screenshot
+            screenshots_dir = "../screenshots_failed_tests"
+            os.makedirs(screenshots_dir, exist_ok=True)
+
+            screenshot_name = f"{item.nodeid.replace('::', '_').replace('.', '_')}.png"
+            screenshot_name_normalized = get_last_path_segment(screenshot_name)
+            screenshot_path = os.path.join(screenshots_dir, screenshot_name_normalized)
+
+            driver.save_screenshot(screenshot_path)
+            print(f"\n[INFO] Screenshot saved: {screenshot_path}")
+            print(f"\n[INFO] Name saved: {screenshot_name}")
+            print(f"\n[INFO] Item saved: {item.nodeid}")
+
+def get_last_path_segment(path):
+    """Returns the last segment of a given path"""
+    return path.split('/')[-1]
 
 def pytest_addoption(parser):
     """Custom Pytest command line options"""

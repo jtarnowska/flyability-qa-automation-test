@@ -2,6 +2,7 @@ import re
 import pytest
 from pages.map_page import MapPage
 
+
 @pytest.fixture(scope="class")
 def map_page(driver):
     map_page = MapPage(driver)
@@ -10,11 +11,17 @@ def map_page(driver):
     return map_page
 
 class TestMapPage:
-    def test_distance_display(self, request, map_page):
+
+    @pytest.mark.parametrize("starting_point, destination_point", [
+        ("Lausanne", "Genève"),
+        ("Bern", "Lugano"),
+        ("Lutry", "Sion")
+    ])
+    def test_distance_display(self, request, map_page, starting_point, destination_point, driver):
         map_page.open_map()
         map_page.click_on_directions_button()
-        map_page.enter_starting_point("Lausanne")
-        map_page.enter_destination_point("Genève")
+        map_page.enter_starting_point(starting_point)
+        map_page.enter_destination_point(destination_point)
         map_page.press_enter()
 
         driving_text = map_page.get_text_over_driving_icon()
